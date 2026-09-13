@@ -1,50 +1,10 @@
 {
   "log": {
-    "loglevel": "none"
+    "loglevel": "warning"
   },
   "inbounds": [
     {
-      "tag": "vless-tls-fallback-443",
-      "port": 443,
-      "listen": "0.0.0.0",
-      "protocol": "vless",
-      "settings": {
-        "clients": [],
-        "fallbacks": [
-          {
-            "dest": 9443
-          }
-        ],
-        "decryption": "none"
-      },
-      "sniffing": {
-        "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
-      },
-      "streamSettings": {
-        "network": "raw",
-        "security": "tls",
-        "tlsSettings": {
-          "alpn": [
-            "http/1.1",
-            "h2"
-          ],
-          "serverName": "#PLACE YOUR DOMAIN OR SUBDOMAIN, EXAMPLE: domain.com",
-          "fingerprint": "firefox",
-          "certificates": [
-            {
-              "keyFile": "#PLACE YOUR SSL CERTIFICATE KEY FILE INSIDE REMNAWAVE PANEL, EXAMPLE: /var/lib/remnawave/configs/xray/ssl/cert.key",
-              "certificateFile": "#PLACE YOUR SSL CERTIFICATE FILE INSIDE REMNAWAVE PANEL, EXAMPLE: /var/lib/remnawave/configs/xray/ssl/cert.pem"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "tag": "hy2-443",
+      "tag": "HYSTERIA_GECKO",
       "port": 443,
       "listen": "0.0.0.0",
       "protocol": "hysteria",
@@ -56,15 +16,23 @@
         "network": "hysteria",
         "security": "tls",
         "finalmask": {
+          "udp": [
+            {
+              "type": "salamander",
+              "settings": {
+                "password": "#REPLACE WITH YOUR PASSWORD. ANY PASSPHRASE",
+                "packetSize": "900-1400"
+              }
+            }
+          ],
           "quicParams": {
             "debug": false,
             "congestion": "bbr"
           }
         },
         "tlsSettings": {
-          "alpn": [
-            "h3"
-          ],
+          "alpn": ["h3"],
+          "serverName": "#REPLACE WITH YOUR SERVER NAME, EXAMPLE: example.com",
           "certificates": [
             {
               "keyFile": "#PLACE YOUR SSL CERTIFICATE KEY FILE INSIDE REMNAWAVE PANEL, EXAMPLE: /var/lib/remnawave/configs/xray/ssl/cert.key",
